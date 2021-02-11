@@ -1,10 +1,10 @@
 ---
-Order: 4
+Order: 8
 Area: java
-TOCTitle: Unit Testing
+TOCTitle: Testing
 ContentId: 82be3b78-2c09-4571-abec-69f95f111e0f
 PageTitle: Java Unit Tests in Visual Studio Code
-DateApproved: 6/17/2019
+DateApproved: 1/11/2021
 MetaDescription: See how you can test your Java code in Visual Studio Code.
 MetaSocialImage:
 ---
@@ -37,7 +37,7 @@ If you run into any issues when using the features below, you can contact us by 
 
 Make sure you have the below tools available already
 
-- JDK (version 1.8.0 or later)
+- JDK (version 11 or later)
 - VS Code (version 1.23.0 or later)
 - [Language Support for Java by Red Hat](https://marketplace.visualstudio.com/items?itemName=redhat.java)
 - [Debugger for Java](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-debug)
@@ -74,7 +74,7 @@ Here's a brief session with TestNG:
 
 - The extension will generate **Run Test** and **Debug Test** shortcuts (also known as CodeLens) above the class and method definition. Select them to start running or debugging the target test cases.
 
-> Note: If you cannot see the CodeLens in your editor, please refer to this [issue comment](https://github.com/Microsoft/vscode-java-test/issues/470#issuecomment-444681714) as a workaround.
+> Note: If you cannot see the CodeLens in your editor, please refer to this [issue comment](https://github.com/microsoft/vscode-java-test/issues/470#issuecomment-444681714) as a workaround.
 
 ## Test Explorer
 
@@ -83,7 +83,7 @@ Here's a brief session with TestNG:
 - The Test Explorer is the place to show all the test cases in your project. You can also run/debug your test cases from here.
 - Click the node in the Test Explorer will navigate to the location of the source code.
 
-> Note: If the Test Explorer is empty, please refer to this [issue comment](https://github.com/Microsoft/vscode-java-test/issues/470#issuecomment-444681714) as a workaround.
+> Note: If the Test Explorer is empty, please refer to this [issue comment](https://github.com/microsoft/vscode-java-test/issues/470#issuecomment-444681714) as a workaround.
 
 ## Customize Test Configurations
 
@@ -91,7 +91,7 @@ Here's a brief session with TestNG:
 
 - Sometimes you may want to customize the configuration for running the test cases. To achieve this, you can add it into your workspace settings under the section: `java.test.config`.
 
-> Note: More details can be found in [Run with Configuration](https://github.com/Microsoft/vscode-java-test/wiki/Run-with-Configuration).
+> Note: More details can be found in [Run with Configuration](https://github.com/microsoft/vscode-java-test/wiki/Run-with-Configuration).
 
 ## View Test Report
 
@@ -130,11 +130,11 @@ If you meet any problem when using the extension, you can refer to the [FAQ](htt
 
 ## More Information
 
-Visit the [GitHub repository](https://github.com/Microsoft/vscode-java-test) of the [Java Test Runner](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-test) for more details on commands and settings.
+Visit the [GitHub repository](https://github.com/microsoft/vscode-java-test) of the [Java Test Runner](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-test) for more details on commands and settings.
 
 ## Next steps
 
 Read on to find out about:
 
-* [Debugging](/docs/java/java-debugging.md) - Find out how to debug your Java project with VS Code.
-* [Java Extensions](/docs/java/extensions.md) - Learn about more useful Java extensions for VS Code.
+- [Debugging](/docs/java/java-debugging.md) - Find out how to debug your Java project with VS Code.
+- [Java Extensions](/docs/java/extensions.md) - Learn about more useful Java extensions for VS Code.

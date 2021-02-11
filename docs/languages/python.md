@@ -1,5 +1,5 @@
 ---
-Order: 11
+Order: 12
 Area: languages
 TOCTitle: Python
 ContentId: c2cb770d-571d-4edf-9eb9-b5b8977c21a0
@@ -17,7 +17,7 @@ This article provides only an overview of the different capabilities of the Pyth
 
 ## Install Python and the Python extension
 
-The [tutorial](/docs/python/python-tutorial.md) guides you through installing Python and using the extension. You must install a Python interpreter yourself separately from the extension. For a quick install, use [Python 3.7 from python.org](https://www.python.org/downloads/) and [install the extension from the VS Code marketplace](https://marketplace.visualstudio.com/items?itemName=ms-python.python).
+The [tutorial](/docs/python/python-tutorial.md) guides you through installing Python and using the extension. You must install a Python interpreter yourself separately from the extension. For a quick install, use [Python 3.7 from python.org](https://www.python.org/downloads/) and [install the extension from the VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=ms-python.python).
 
 Once you have a version of Python installed, activate it using the **Python: Select Interpreter** command. If VS Code doesn't automatically locate the interpreter you're looking for, refer to [Environments - Manually specify an interpreter](/docs/python/environments.md#manually-specify-an-interpreter).
 
@@ -60,7 +60,7 @@ IntelliSense quickly shows methods, class members, and documentation as you type
 
 Linting analyzes your Python code for potential errors, making it easy to navigate to and correct different problems.
 
-The Python extension can apply a number of different linters including Pylint, Pep8, Flake8, mypy, pydocstyle, prospector, and pylama. See [Linting](/docs/python/linting.md).
+The Python extension can apply a number of different linters including Pylint, pycodestyle, Flake8, mypy, pydocstyle, prospector, and pylama. See [Linting](/docs/python/linting.md).
 
 <video id="python-linting-video" src="https://az754404.vo.msecnd.net/public/python-linting.mp4" poster="/images/python_python-linting-placeholder.png" autoplay loop controls muted></video>
 
@@ -104,7 +104,7 @@ Packages are installed using the **Terminal** panel and commands like `pip insta
 
 ## Jupyter notebooks
 
-If you open a [Jupyter notebook](http://jupyter.org/) file (`.ipynb`) in VS Code, you can use the Jupyter Notebook Editor to directly view, modify, and run code cells.
+If you open a [Jupyter notebook](https://jupyter.org/) file (`.ipynb`) in VS Code, you can use the Jupyter Notebook Editor to directly view, modify, and run code cells.
 
 ![Jupyter notebook running in VS code in the Notebook Editor](images/python/native-jupyter.png)
 

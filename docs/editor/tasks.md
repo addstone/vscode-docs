@@ -1,10 +1,10 @@
 ---
-Order: 10
+Order: 11
 Area: editor
 TOCTitle: Tasks
 ContentId: F5EA1A52-1EF2-4127-ABA6-6CEF5447C608
 PageTitle: Tasks in Visual Studio Code
-DateApproved: 3/9/2020
+DateApproved: 2/4/2021
 MetaDescription: Expand your development workflow with task integration in Visual Studio Code.
 ---
 # Integrate with External Tools via Tasks
@@ -15,7 +15,7 @@ If you are using Visual Studio Code version 1.13 or earlier, refer to the previo
 
 ---
 
-Lots of tools exist to automate tasks like linting, building, packaging, testing, or deploying software systems. Examples include the [TypeScript Compiler](https://www.typescriptlang.org/), linters like [ESLint](https://eslint.org/) and [TSLint](https://palantir.github.io/tslint/) as well as build systems like [Make](https://en.wikipedia.org/wiki/Make_software), [Ant](https://ant.apache.org/), [Gulp](https://gulpjs.com/), [Jake](http://jakejs.com/), [Rake](https://ruby.github.io/rake/), and [MSBuild](https://github.com/Microsoft/msbuild).
+Lots of tools exist to automate tasks like linting, building, packaging, testing, or deploying software systems. Examples include the [TypeScript Compiler](https://www.typescriptlang.org/), linters like [ESLint](https://eslint.org/) and [TSLint](https://palantir.github.io/tslint/) as well as build systems like [Make](https://en.wikipedia.org/wiki/Make_software), [Ant](https://ant.apache.org/), [Gulp](https://gulpjs.com/), [Jake](https://jakejs.com/), [Rake](https://ruby.github.io/rake/), and [MSBuild](https://github.com/microsoft/msbuild).
 
 ![VS Code can talk to a variety of external tools](images/tasks/tasks_hero.png)
 
@@ -114,7 +114,7 @@ In addition, VS Code created a `tasks.json` file with the following content:
 
 This instructs VS Code to scan the output of the **npm lint** script for problems using the ESLint stylish format.
 
-For Gulp, Grunt, and Jake, the task auto-detection works the same. Below is an example of the tasks detected for the [vscode-node-debug](https://github.com/Microsoft/vscode-node-debug) extension.
+For Gulp, Grunt, and Jake, the task auto-detection works the same. Below is an example of the tasks detected for the [vscode-node-debug](https://github.com/microsoft/vscode-node-debug) extension.
 
 ![Gulp task auto-detection](images/tasks/gulp-auto-detect.png)
 
@@ -253,7 +253,7 @@ The `tasks.json` file looks like this:
             "command": "gulp",
             "args": ["build"],
             "options": {
-                "cwd": "${workspaceRoot}/client"
+                "cwd": "${workspaceFolder}/client"
             }
         },
         {
@@ -261,7 +261,7 @@ The `tasks.json` file looks like this:
             "command": "gulp",
             "args": ["build"],
             "options": {
-                "cwd": "${workspaceRoot}/server"
+                "cwd": "${workspaceFolder}/server"
             }
         },
         {
@@ -286,6 +286,10 @@ If you specify `"dependsOrder": "sequence"` then your task dependencies are exec
     ]
 }
 ```
+
+### User level tasks
+
+You can create user level tasks that are not tied to a specifc workspace or folder using the **Tasks: Open User Tasks** command. Only `shell` and `process` tasks can be used here since other task types require workspace information.
 
 ## Output behavior
 
@@ -375,7 +379,7 @@ You can specify a task's run behaviors using the `runOptions` property:
 
 ## Customizing auto-detected tasks
 
-As mentioned above, you can customize auto-detected tasks in the `tasks.json` file. You usually do so to modify presentation properties or to attach a problem matcher to scan the task's output for errors and warnings. You can customize a task directly from the **Run Task** list by pressing the gear icon to the right to insert the corresponding task reference into the `tasks.json` file. Assume you have the following Gulp file to lint JavaScript files using ESLint (the file is taken from https://github.com/adametry/gulp-eslint):
+As mentioned above, you can customize auto-detected tasks in the `tasks.json` file. You usually do so to modify presentation properties or to attach a problem matcher to scan the task's output for errors and warnings. You can customize a task directly from the **Run Task** list by pressing the gear icon to the right to insert the corresponding task reference into the `tasks.json` file. Assume you have the following Gulp file to lint JavaScript files using ESLint (the file is taken from [https://github.com/adametry/gulp-eslint](https://github.com/adametry/gulp-eslint)):
 
 ```js
 const gulp = require('gulp');
@@ -428,7 +432,7 @@ Usually you would now add a problem matcher (in this case `$eslint-stylish`) or 
 
 ## Processing task output with problem matchers
 
-VS Code can process the output from a task with a problem matcher and ships with several problem matchers 'in-the-box':
+VS Code can process the output from a task with a problem matcher. Problem matchers scan the task output text for known warning or error strings, and report these inline in the editor and in the Problems panel. VS Code ships with several problem matchers 'in-the-box':
 
 - **TypeScript**: `$tsc` assumes that file names in the output are relative to the opened folder.
 - **TypeScript Watch**: `$tsc-watch` matches problems reported from the `tsc` compiler when executed in watch mode.
@@ -440,8 +444,6 @@ VS Code can process the output from a task with a problem matcher and ships with
 - **CSharp and VB Compiler**: `$mscompile` assumes that file names are reported as an absolute path.
 - **Lessc compiler**: `$lessc` assumes that file names are reported as absolute path.
 - **Node Sass compiler**: `$node-sass` assumes that file names are reported as an absolute path.
-
-Problem matchers scan the task output text for known warning or error strings and report these inline in the editor and in the Problems panel.
 
 You can also create your own problem matcher, which we'll discuss [in a later section](/docs/editor/tasks.md#defining-a-problem-matcher).
 
@@ -549,22 +551,24 @@ Task properties can also be defined in the global scope. If present, they will b
 When the default shell is PowerShell, or when a task is configured to use PowerShell, you might see unexpected space and quote escaping. The unexpected escaping only occurs with cmdlets because VS Code doesn't know if your command contains cmdlets. Example 1 below shows a case where you'll get escaping that doesn't work with PowerShell. Example 2 shows the best, cross-platform, way to get good escaping. In some cases, you might not be able to follow example 2 and you'll need to do the manual escaping shown in example 3.
 
 ```json
-{
-    "label": "PowerShell example 1 (unexpected escaping)",
-    "type": "shell",
-    "command": "Get-ChildItem \"Folder With Spaces\""
-},
-{
-    "label": "PowerShell example 2 (expected escaping)",
-    "type": "shell",
-    "command": "Get-ChildItem",
-    "args": ["Folder With Spaces"]
-},
-{
-    "label": "PowerShell example 3 (manual escaping)",
-    "type": "shell",
-    "command": "& Get-ChildItem \\\"Folder With Spaces\\\""
-}
+"tasks": [
+    {
+        "label": "PowerShell example 1 (unexpected escaping)",
+        "type": "shell",
+        "command": "Get-ChildItem \"Folder With Spaces\""
+    },
+    {
+        "label": "PowerShell example 2 (expected escaping)",
+        "type": "shell",
+        "command": "Get-ChildItem",
+        "args": ["Folder With Spaces"]
+    },
+    {
+        "label": "PowerShell example 3 (manual escaping)",
+        "type": "shell",
+        "command": "& Get-ChildItem \\\"Folder With Spaces\\\""
+    }
+]
 ```
 
 ## Changing the encoding for a task output
@@ -627,7 +631,7 @@ helloWorld.c:5:3: warning: implicit declaration of function ‘prinft’
 
 We want to produce a problem matcher that can capture the message in the output and show a corresponding problem in VS Code.  Problem matchers heavily rely on [regular expressions](https://en.wikipedia.org/wiki/Regular_expression). The section below assumes you are familiar with regular expressions.
 
->**Tip:** We have found the [RegEx101 playground](https://regex101.com/) to be a great way to develop and test regular expressions.
+>**Tip:** We have found the [RegEx101 playground](https://regex101.com/), which has an ECMAScript (JavaScript) flavor, to be a great way to develop and test regular expressions.
 
 A matcher that captures the above warning (and errors) looks like this:
 
@@ -655,7 +659,7 @@ A matcher that captures the above warning (and errors) looks like this:
 }
 ```
 
-Note that the file, line, and message properties are mandatory. The `fileLocation` specifies whether the file paths in the problem are `absolute` or `relative`. If the task produces both absolute and relative paths, you can use the `autoDetect` file location. With `autoDetect`, paths are first tested as absolute paths, and if the file doesn't exist then the path is assumed to be relative.
+Note that the file, line, and message properties are mandatory. The `fileLocation` specifies whether the file paths that are produced by the task output and matched in the problem are `absolute` or `relative`. If the task produces both absolute and relative paths, you can use the `autoDetect` file location. With `autoDetect`, paths are first tested as absolute paths, and if the file doesn't exist then the path is assumed to be relative.
 
 Here is a finished `tasks.json` file with the code above (comments removed) wrapped with the actual task details:
 
@@ -700,6 +704,8 @@ There are a couple more properties that can be used inside a pattern. These are:
 You can also define a problem matcher that captures only a file. To do so, define a `pattern` with the optional `kind` attribute set to `file`. In this case, there is no need to provide a `line` or `location` property.
 
 >**Note:** A functional pattern must at least provide a match group for `file` and `message` if the `kind` property is set to `file`. If no `kind` property is provided or the `kind` property is set to `location`, a function pattern must provide a `line` or `location` property as well.
+
+>**Note:** The problem matcher only parses output from the given command. If you wish to parse output written to separate file (e.g. a log file), make the command that you run print out lines from the separate file before it finishes executing.
 
 ## Defining a multiline problem matcher
 
@@ -780,6 +786,8 @@ Here is a problem matcher to fully capture ESLint stylish problems:
     ]
 }
 ```
+
+**Note**: If you have multiple problems that occur on the same resource with the exact same line and column, then only one problem will be shown. This applies to all problem matchers, not just multiline problem matchers.
 
 ## Modifying an existing problem matcher
 
@@ -1003,3 +1011,42 @@ Alternatively, you can override a task's shell with the `options.shell` property
     },
     ...
 ```
+
+### Can a background task be used as a `prelaunchTask` in launch.json?
+
+Yes. Since a background task will run until killed, a background task on its own has no signal that it has "completed". To use a background task as a `prelaunchTask`, you must add an appropriate background `problemMatcher` to the background task so that there is a way for the task system and debug system to know that the task "finished".
+
+Your task could be:
+
+```json
+{
+    "type": "npm",
+    "script": "watch",
+    "problemMatcher": "$tsc-watch",
+    "isBackground": true,
+}
+```
+
+**Note:** The `$tsc-watch` is a **background** problem matcher, as is required for a background task.
+
+You can then use the task as a `prelaunchTask` in your `launch.json` file:
+
+```json
+{
+    "name": "Launch Extension",
+    "type": "extensionHost",
+    "request": "launch",
+    "runtimeExecutable": "${execPath}",
+    "args": [
+        "--extensionDevelopmentPath=${workspaceRoot}"
+    ],
+    "stopOnEntry": false,
+    "sourceMaps": true,
+    "outFiles": [
+        "${workspaceRoot}/out/src/**/*.js"
+    ],
+    "preLaunchTask": "npm: watch"
+}
+```
+
+For more on background tasks, go to [Background / watching tasks](/docs/editor/tasks.md#background-watching-tasks).

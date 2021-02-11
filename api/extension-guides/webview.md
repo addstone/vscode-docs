@@ -1,7 +1,7 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
 ContentId: adddd33e-2de6-4146-853b-34d0d7e6c1f1
-DateApproved: 3/9/2020
+DateApproved: 2/4/2021
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
 MetaDescription: Use the Webview API to create fully customizable views within Visual Studio Code.
@@ -13,9 +13,19 @@ The webview API allows extensions to create fully customizable views within Visu
 
 Think of a webview as an `iframe` within VS Code that your extension controls. A webview can render almost any HTML content in this frame, and it communicates with extensions using message passing. This freedom makes webviews incredibly powerful, and opens up a whole new range of extension possibilities.
 
+Webviews are used in several VS Code APIs:
+
+- With Webview Panels created using `createWebviewPanel`. In this case, Webview panels are shown in VS Code as distinct editors. This makes them useful for displaying custom UI and custom visualizations.
+- As the view for a [custom editor](/api/extension-guides/custom-editors). Custom editors allow extensions to provide a custom UI for editing any file in the workspace. The custom editor API also lets your extension hook into editor events such as undo and redo, as well as file events such as save.
+- In [Webview views](/api/references/vscode-api#WebviewView) that are rendered in the sidebar or panel areas. See the [webview view sample extension](https://github.com/microsoft/vscode-extension-samples/tree/master/webview-view-sample) for more details.
+
+This page focuses on the basic webview panel API, although almost everything covered here applies to the webviews used in custom editors and webview views as well. Even if you are more interested in those APIs, we recommend reading through this page first to familiarize yourself with the webview basics.
+
 ## Links
 
-- [Webview Sample](https://github.com/Microsoft/vscode-extension-samples/blob/master/webview-sample/README.md)
+- [Webview Sample](https://github.com/microsoft/vscode-extension-samples/blob/master/webview-sample/README.md)
+- [Custom Editors Documentation](/api/extension-guides/custom-editors)
+- [Webview View Sample](https://github.com/microsoft/vscode-extension-samples/tree/master/webview-view-sample)
 
 ### VS Code API Usage
 
@@ -40,7 +50,7 @@ Remember: Just because you can do something with webviews, doesn't mean you shou
 
 To explain the webview API, we are going to build a simple extension called **Cat Coding**. This extension will use a webview to show a gif of a cat writing some code (presumably in VS Code). As we work through the API, we'll continue adding functionality to the extension, including a counter that keeps track of how many lines of source code our cat has written and notifications that inform the user when the cat introduces a bug.
 
-Here's the `package.json` for the first version of the **Cat Coding** extension. You can find the complete code for the example app [here](https://github.com/Microsoft/vscode-extension-samples/blob/master/webview-sample/README.md). The first version of our extension [contributes a command](/api/references/contribution-points#contributes.commands) called `catCoding.start`. When a user invokes this command, we will show a simple webview with our cat in it. Users will be able to invoke this command from the **Command Palette** as **Cat Coding: Start new cat coding session** or even create a keybinding for it if they are so inclined.
+Here's the `package.json` for the first version of the **Cat Coding** extension. You can find the complete code for the example app [here](https://github.com/microsoft/vscode-extension-samples/blob/master/webview-sample/README.md). The first version of our extension [contributes a command](/api/references/contribution-points#contributes.commands) called `catCoding.start`. When a user invokes this command, we will show a simple webview with our cat in it. Users will be able to invoke this command from the **Command Palette** as **Cat Coding: Start new cat coding session** or even create a keybinding for it if they are so inclined.
 
 ```json
 {
@@ -321,7 +331,7 @@ export function activate(context: vscode.ExtensionContext) {
           columnToShowIn,
           {}
         );
-        currentPanel.webview.html = getWebviewContent(cats['Coding Cat']);
+        currentPanel.webview.html = getWebviewContent('Coding Cat');
 
         // Reset when the current panel is closed
         currentPanel.onDidDispose(
@@ -359,7 +369,7 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.ViewColumn.One,
         {}
       );
-      panel.webview.html = getWebviewContent(cats['Coding Cat']);
+      panel.webview.html = getWebviewContent('Coding Cat');
 
       // Update contents based on view state changes
       panel.onDidChangeViewState(
@@ -388,7 +398,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 function updateWebviewForCat(panel: vscode.WebviewPanel, catName: keyof typeof cats) {
   panel.title = catName;
-  panel.webview.html = getWebviewContent(cats[catName]);
+  panel.webview.html = getWebviewContent(catName);
 }
 ```
 
@@ -535,13 +545,21 @@ code {
 }
 ```
 
-Review the [Theme Color Reference](/api/references/theme-color) for the available theme variables.
+Review the [Theme Color Reference](/api/references/theme-color) for the available theme variables. [An extension](https://marketplace.visualstudio.com/items?itemName=connor4312.css-theme-completions) is available which provides IntelliSense suggestions for the variables.
 
 The following font related variables are also defined:
 
 - `--vscode-editor-font-family` - Editor font family (from the `editor.fontFamily` setting).
 - `--vscode-editor-font-weight` - Editor font weight (from the `editor.fontWeight` setting).
 - `--vscode-editor-font-size` - Editor font size (from the `editor.fontSize` setting).
+
+Finally, for special cases where you need to write CSS that targets a single theme, the body element of webviews has a new data attribute called `vscode-theme-name` that stores the full name of the currently active theme. This lets you write theme-specific CSS for webviews:
+
+```css
+body[data-vscode-theme-name="One Dark Pro"] {
+    background: hotpink;
+}
+```
 
 ## Scripts and message passing
 
@@ -812,7 +830,7 @@ The policy `default-src 'none';` disallows all content. We can then turn back on
 />
 ```
 
-The `${webview.cspSource}` value is a placeholder for a value that comes from the webview object itself. See the [webview sample](https://github.com/Microsoft/vscode-extension-samples/blob/master/webview-sample) for a complete example of how to use this value.
+The `${webview.cspSource}` value is a placeholder for a value that comes from the webview object itself. See the [webview sample](https://github.com/microsoft/vscode-extension-samples/blob/master/webview-sample) for a complete example of how to use this value.
 
 This content security policy also implicitly disables inline scripts and styles. It is a best practice to extract all inline styles and scripts to external files so that they can be properly loaded without relaxing the content security policy.
 
@@ -842,7 +860,7 @@ The best way to solve this is to make your webview stateless. Use [message passi
 
 ### getState and setState
 
-Scripts running inside a webview can use the `getState` and `setState` methods to save off and restore a JSON serializable state object. This state is persisted even the webview content itself is destroyed when a webview panel becomes hidden. The state is destroyed when the webview panel is destroyed.
+Scripts running inside a webview can use the `getState` and `setState` methods to save off and restore a JSON serializable state object. This state is persisted even after the webview content itself is destroyed when a webview panel becomes hidden. The state is destroyed when the webview panel is destroyed.
 
 ```js
 // Inside a webview script

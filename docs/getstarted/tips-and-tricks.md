@@ -4,7 +4,7 @@ Area: getstarted
 TOCTitle: Tips and Tricks
 ContentId: 9bbbe55d-cf81-428f-8a9f-4f60280cb874
 PageTitle: Visual Studio Code Tips and Tricks
-DateApproved: 3/9/2020
+DateApproved: 2/4/2021
 MetaDescription: Visual Studio Code Tips and Tricks for power users.
 ---
 # Visual Studio Code Tips and Tricks
@@ -12,6 +12,8 @@ MetaDescription: Visual Studio Code Tips and Tricks for power users.
 "Tips and Tricks" lets you jump right in and learn how to be productive with Visual Studio Code. You'll become familiar with its powerful editing, code intelligence, and source code control features and learn useful keyboard shortcuts. This topic goes pretty fast and provides a broad overview, so be sure to look at the other in-depth topics in [Getting Started](/docs/getstarted/userinterface.md) and the [User Guide](/docs/editor/codebasics.md) to learn more.
 
 > If you don't have Visual Studio Code installed, go to the [Download](/download) page. You can find platform specific setup instructions at [Running VS Code on Linux](/docs/setup/linux.md), [macOS](/docs/setup/mac.md), and [Windows](/docs/setup/windows.md).
+
+Prefer a video? You can watch a recent Microsoft Build talk [Visual Studio Code tips and tricks](https://aka.ms/Build2020AppDev-VSCodeTips), which describes 20 tips and tricks for working productively with VS Code.
 
 ## Basics
 
@@ -167,6 +169,7 @@ Are you used to keyboard shortcuts from another editor? You can install a Keymap
 * [Emacs Keymap](https://marketplace.visualstudio.com/items?itemName=hiro-sun.vscode-emacs)
 * [Atom Keymap](https://marketplace.visualstudio.com/items?itemName=ms-vscode.atom-keybindings)
 * [Eclipse Keymap](https://marketplace.visualstudio.com/items?itemName=alphabotsec.vscode-eclipse-keybindings)
+* [Visual Studio Keymap](https://marketplace.visualstudio.com/items?itemName=ms-vscode.vs-keybindings)
 
 ### Customize your keyboard shortcuts
 
@@ -282,7 +285,7 @@ And many, many [other customizations](/docs/getstarted/settings.md).
 
 ### Language specific settings
 
-For the settings, which you only want for specific languages, you can scope the settings by the language identifier. You can find a list of commonly used language ids in the [Language Identifiers](/docs/languages/identifiers.md) reference.
+You can scope the settings that you only want for specific languages by the language identifier. You can find a list of commonly used language ids in the [Language Identifiers](/docs/languages/identifiers.md) reference.
 
 ```json
 "[languageid]": {
@@ -304,7 +307,7 @@ Enabled by default for many file types. Create your own schema and validation in
         "fileMatch": [
             "/bower.json"
         ],
-        "url": "http://json.schemastore.org/bower"
+        "url": "https://json.schemastore.org/bower"
     }
 ]
 ```
@@ -533,7 +536,7 @@ Pressing the `kbstyle(Alt)` key enables fast scrolling in the editor and Explore
 
 Keyboard Shortcut: `kb(editor.action.copyLinesUpAction)` or `kb(editor.action.copyLinesDownAction)`
 
-> The commands **Copy Line Up/Down** are unbound on Linux because the VS Code default keybindings would conflict with Ubuntu keybindings, see [Issue #509](https://github.com/Microsoft/vscode/issues/509). You can still set the commands `editor.action.copyLinesUpAction` and `editor.action.copyLinesDownAction` to your own preferred keyboard shortcuts.
+> The commands **Copy Line Up/Down** are unbound on Linux because the VS Code default keybindings would conflict with Ubuntu keybindings, see [Issue #509](https://github.com/microsoft/vscode/issues/509). You can still set the commands `editor.action.copyLinesUpAction` and `editor.action.copyLinesDownAction` to your own preferred keyboard shortcuts.
 
 ![copy line down](images/tips-and-tricks/copy_line_down.gif)
 
@@ -671,7 +674,7 @@ Select a symbol then type `kb(editor.action.goToReferences)`. Alternatively, you
 
 ### Find All References view
 
-Select a symbol then type `kb(references-view.find)` to open the References view showing all your file's symbols in a dedicated view.
+Select a symbol then type `kb(references-view.findReferences)` to open the References view showing all your file's symbols in a dedicated view.
 
 ### Rename Symbol
 
@@ -937,9 +940,7 @@ For example, to bind `kbstyle(Ctrl+H)` to the `Run tests` task, add the followin
 }
 ```
 
-### Run npm scripts as tasks from the explorer
-
-With the setting `npm.enableScriptExplorer`, you can enable an explorer that shows the scripts defined in your workspace.
+### Run npm scripts as tasks from the Explorer
 
 ![Filter problems](images/tips-and-tricks/script_explorer.png)
 

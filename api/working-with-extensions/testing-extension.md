@@ -1,13 +1,13 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
 ContentId: 2447F8EB-15F1-4279-B621-126C7B8EBF4B
-DateApproved: 3/9/2020
+DateApproved: 2/4/2021
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
 MetaDescription: Write tests for your Visual Studio Code extension (plug-in).
 ---
 
-# Testing Extension
+# Testing Extensions
 
 Visual Studio Code supports running and debugging tests for your extension. These tests will run inside a special instance of VS Code named the **Extension Development Host**, and have full access to the VS Code API. We refer to these tests as integration tests, because they go beyond unit tests that can run without a VS Code instance. This documentation focuses on VS Code integration tests.
 
@@ -91,9 +91,9 @@ import * as glob from 'glob';
 export function run(): Promise<void> {
   // Create the mocha test
   const mocha = new Mocha({
-    ui: 'tdd'
+    ui: 'tdd',
+    color: true
   });
-  mocha.useColors(true);
 
   const testsRoot = path.resolve(__dirname, '..');
 
@@ -187,7 +187,12 @@ Because of VS Code's limitation, if you are using VS Code stable release and try
 Running extension tests from the command line is currently only supported if no other instance of Code is running.
 ```
 
-You can either use [VS Code Insiders](https://code.visualstudio.com/insiders/) for development or launch the extension test from the debug launch config that bypasses this limitation.
+In general if you run extension tests from CLI, the version the tests run with cannot be running already. As a workaround, you can run the tests
+in VS Code Stable and use [VS Code Insiders](https://code.visualstudio.com/insiders/) for development. As long as you are not running the tests
+from CLI in VS Code Insiders but in VS Code Stable, this setup will work fine.
+
+An alternative is to run the extension tests from the debug launch configuration from within VS Code itself. This has the additional advantage
+that you can even debug the tests.
 
 ### Disabling other extensions while debugging
 
@@ -275,12 +280,12 @@ main();
 
 ### Migrating from `vscode`
 
-The [`vscode`](https://github.com/Microsoft/vscode-extension-vscode) module had been the default way of running extension integration tests and is being superseded by [`vscode-test`](https://github.com/microsoft/vscode-test). Here's how you can migrate from it:
+The [`vscode`](https://github.com/microsoft/vscode-extension-vscode) module had been the default way of running extension integration tests and is being superseded by [`vscode-test`](https://github.com/microsoft/vscode-test). Here's how you can migrate from it:
 
 - Remove `vscode` dependency.
 - Add `vscode-test` dependency.
 - As the old `vscode` module was also used for downloading VS Code type definition, you need to
-  - Manually install `@types/vscode` that follows your `engine.vscode` in `package.json`. For example, if your `engine.vscode` is `1.30`, install `@types/vscode@1.30`.
+  - Manually install `@types/vscode` that follows your `engine.vscode` in `package.json`. For example, if your `engine.vscode` is `1.30`, install `"@types/vscode": "^1.30.0"`.
   - Remove `"postinstall": "node ./node_modules/vscode/bin/install"` from `package.json`.
 - Add a [test script](#the-test-script). You can use [`runTest.ts`](https://github.com/microsoft/vscode-extension-samples/blob/master/helloworld-test-sample/src/test/runTest.ts) in the sample as a starting point.
 - Point the `test` script in `package.json` to run the compiled output of `runTest.ts`.

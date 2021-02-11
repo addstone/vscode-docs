@@ -4,7 +4,7 @@ Area: getstarted
 TOCTitle: Telemetry
 PageTitle: Visual Studio Code Telemetry
 ContentId: 47a2e3b1-24f2-42e6-a6e6-272c2a0f3218
-DateApproved: 3/9/2020
+DateApproved: 2/4/2021
 MetaDescription: Learn about Visual Studio Code collected telemetry and how to opt out.
 ---
 # Telemetry
@@ -29,17 +29,13 @@ If you use the JSON editor for your settings, add the following line:
 
 VS Code collects data about any crashes that occur and sends it to Microsoft to help improve our products and services.
 
-If you don't wish to send crash data to Microsoft, you can set the `telemetry.enableCrashReporter` user [setting](/docs/getstarted/settings.md) to `false`.
+If you don't wish to send crash data to Microsoft, you can change the `enable-crash-reporter` runtime argument to `false`
 
-From **File** > **Preferences** > **Settings** (macOS: **Code** > **Preferences** > **Settings**), search for `crash`, and uncheck the **Telemetry: Enable Crash Reporter** setting.
-
-If you use the JSON editor for your settings, add the following line:
-
-```json
-    "telemetry.enableCrashReporter": false
-```
-
-> **Note**: This option requires a restart of VS Code to take effect.
+* Open the Command Palette (`kb(workbench.action.showCommands)`).
+* Run the **Preferences: Configure Runtime Arguments** command.
+* This command will open a `argv.json` file to configure runtime arguments.
+* Edit `"enable-crash-reporter": false`.
+* Restart VS Code.
 
 ## Extensions and telemetry
 
@@ -66,7 +62,7 @@ In addition to supporting the General Data Protection Regulation (GDPR), the VS 
 In preparation for GDPR, we made several updates to VS Code, these include:
 
 * Making it easier to opt out of telemetry collection by placing a notification in product for all existing and new users.
-* Reviewing and classifying the telemetry that we send (documented in [our OSS codebase](https://github.com/Microsoft/vscode/pull/34997)).
+* Reviewing and classifying the telemetry that we send (documented in [our OSS codebase](https://github.com/microsoft/vscode/pull/34997)).
 * Ensuring that we have valid data retention policies in place for any data we do collect, for example crash dumps.
 
 In short, we have worked hard to do the right thing, for all users, as these practices apply to all geographies, not just Europe.
@@ -89,7 +85,7 @@ From **File** > **Preferences** > **Settings** (macOS: **Code** > **Preferences*
 
 > **Note**: VS Code extensions may also use online services and may not provide settings to configure the usage of these online services, or they may not register their settings to show up when searching for `@tag:usesOnlineServices`. Consult the specific extension's documentation to learn about its usage of online services.
 
-### non-Microsoft online services used by VS Code
+### Non-Microsoft online services used by VS Code
 
 The built-in **npm support for VS Code** extension sends requests to `https://registry.npmjs.org` and `https://registry.bower.io`.
 

@@ -3,91 +3,115 @@ Order: 5
 Area: java
 TOCTitle: Project Management
 ContentId: 251cba68-c77f-4ac6-a5de-1fab8dcca867
-PageTitle: Syntax Mode, Maven Support, Java Package, and Dependency Management in Visual Studio Code
-DateApproved: 6/17/2019
-MetaDescription: Maven Support, Java Package and Dependency Management in Visual Studio Code
+PageTitle: Lightweight Mode, Maven Support, Java Package, and Dependency Management in Visual Studio Code
+DateApproved: 1/29/2021
+MetaDescription: Lightweight Mode, Maven Support, Java Package and Dependency Management in Visual Studio Code
 MetaSocialImage:
 ---
 
-# Java Project Management in VS Code
+# Java project management in VS Code
 
-This document will give you an overview of how to use the [Java Dependency Viewer](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-dependency) and [Maven for Java](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-maven) extensions to manage your projects within Visual Studio Code.
-
-VS Code also supports a Syntax Mode for Java, which works best for reading and navigating through source files.
+This document will give you an overview of how to manage your Java project in Visual Studio Code.
 
 If you run into any issues when using the features below, you can contact us by clicking the **Report an issue** button below.
 
 <a class="tutorial-feedback-btn" onclick="reportIssue('java-tutorial', 'project')" href="javascript:void(0)">Report an issue</a>
 
-## Syntax Mode
-
-Reading and navigating through source code is a common use for a lightweight editor. When developers use VS Code to open a Java source file/folder that doesn't involve a project system, it's annoying to see semantic errors reported when the source cannot be resolved to a project. With Syntax Mode, you'll be able to read source code more efficiently with the help of Code Navigation and Outline features. Syntax errors are also reported so you can fix them right away.
-
-Usually you won't even know Syntax Mode is on, but you can configure it. Go to Problems panel, and look for the warning `File xxx is non-project file, only syntax errors are reported`, which means you are in Syntax Mode. If you want to see all the type errors and get full support, right-click on this warning and switch out of Syntax Mode through the context menu. See the screenshots below.
-
-![Enable Semantic](images/java-project/enablesemantic.png)
-
-The project mode will provide you full support for [standalone Java files](#standalone-java-file-support). It's also easy to turn back to Syntax Mode for either a single file or any non-project files with the **Only report syntax errors for** actions.
-
-![Switch to Syntax](images/java-project/syntaxonly.png)
-
 ## Project management
 
-Project Management in Visual Studio Code is provided by the [Java Dependency Viewer](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-dependency) extension. This extension has many features including creating projects as well as viewing the package structure of the project and its dependencies.
+Managing a project in VS Code requires the [Project Manager for Java](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-dependency) extension. The extension helps manage class paths and dependencies, and create new projects, packages, and classes.
 
-<a class="tutorial-install-extension-btn" href="vscode:extension/vscjava.vscode-java-dependency">Install the Java Dependency Viewer</a>
+<a class="tutorial-install-extension-btn" href="vscode:extension/vscjava.vscode-java-dependency">Install the Project Manager for Java</a>
 
-### Create project
+### Project view
 
-In addition to creating a project through Maven Archetype, you can also use the following command to create a simple Java project: **Java: Create Java Project** from the Command Palette.
+Project view helps you view your project and its dependencies, and provides entry points for project management tasks. You can switch between a hierarchy view and flat view.
 
-<video autoplay loop muted playsinline controls>
-  <source src="/docs/java/java-project/create-project.mp4" type="video/mp4">
-</video>
+![project view](images/java-project/projectmanager-overview.png)
 
-If you're creating a Spring Boot project, you can also use the [Spring Initializr](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-spring-initializr) extension, see [Spring Boot in Visual Studio Code](/docs/java/java-spring-boot.md).
+### Create a project
 
-### Package and dependency view
+You can create a project or source only workload by clicking the **+** sign on project view, or through the command: **Java: Create Java Project...**. During creation, VS Code will facilitate installing required extension(s) per your project type, if the extension(s) weren't installed.
 
-The extension also has a hierarchy view of your project and dependencies, which supplements the file view and outline provided by Visual Studio Code, so you don't need to expand multiple subfolders to just view your Java package.
+![create project](images/java-project/projectmanager-createproject.png)
 
-<video autoplay loop muted playsinline controls>
-  <source src="/docs/java/java-project/package-viewer.mp4" type="video/mp4">
-</video>
+### Import a project or module
 
-<video autoplay loop muted playsinline controls>
-  <source src="/docs/java/java-project/hierarchical.mp4" type="video/mp4">
-</video>
+A project or module is imported to a workspace through **File** > **Open Folder** or **File** > **Open Workspace** menu. VS Code for Java will detect your project type automatically. As a tip, you can run the command **Java: Import Java projects in workspace** to reimport a project and alert the language server that there were changes to the project, without reloading your window.
 
-### Standalone Java file support
+### Add a dependency
 
-Visual Studio Code also supports Java files without a project system. The solution is folder-based, so you can open a source folder with Visual Studio Code. After switching from [Syntax Mode](#syntax-mode) to Project Mode (by selecting the **Report compilation errors...** Quick Fix), all the Java files within the folder will be properly compiled with all language features available. You can also run and debug standalone files.
+For Maven project, you can add a dependency by clicking the **+** sign next to **Maven Dependencies** node in project view.
 
-<video autoplay loop muted playsinline controls>
-  <source src="/docs/java/java-project/standalone.mp4" type="video/mp4">
-</video>
+![add maven dependency](images/java-project/projectmanager-addmavendep.PNG)
 
-### Multiple source folders
+### Add a JAR
 
-If you have multiple subfolders that have source code for your project, you can easily add these folders to source path, then all the code inside will be correctly compiled.
-
-<video autoplay loop muted playsinline controls>
-  <source src="/docs/java/java-project/multiple-source.mp4" type="video/mp4">
-</video>
-
-### Adding external JAR
-
-You can use the Java Dependency Viewer to add any JAR file to your project.
+JAR file(s) can be added by clicking the **+** sign next to **Referenced Libraries** node in project view.
 
 ![Add Dependency](images/java-project/manage-dependencies.gif)
 
-The other easy way to bring additional JAR files as dependencies is to create a `lib/` folder in the root directory of the standalone files and place your JAR files there. Source for `foo.jar` is automatically detected if there is a `foo-sources.jar` in the `lib/` folder.
+For more details on library, refer to [Library Configuration](/docs/java/java-project.md#library-configuration).
 
-<video autoplay loop muted playsinline controls>
-  <source src="/docs/java/java-project/lib.mp4" type="video/mp4">
-</video>
+### Export to JAR
 
-Behind the scene, there's a setting `java.project.referencedLibaries`. Below are details on how to customize this setting.
+You can export your build to JAR by clicking the **↓** sign on project view or run command: **Java: Export Jar...**.
+
+![export jar](images/java-project/projectmanager-exportjar.gif)
+
+## Configure JDK
+
+As Java evolves, it's common that developers work with multiple versions of JDK. To correctly configure your environment and project, you have to know two configurations, `java.configuration.runtimes` and `java.home`. The former specifies options for your project's execution environment; the latter specifies your language server's execution environment.
+
+> **Note**: Although the Java language server requires JDK version 11 or above to run, this is **NOT** a requirement to your project's runtime.
+
+The easiest way for you to configure the JDK is to use the Java Runtime Configuration wizard. You can launch the wizard by opening the **Command Palette** (`kb(workbench.action.showCommands)`) and typing the command **Java: Configure Java Runtime**, which will bring up the configuration user interface shown below.
+
+![JDK Configuration](images/java-tutorial/jdk-configuration.png)
+
+If you want to configure without the wizard, please refer below for details.
+
+### JDK for projects
+
+VS Code will detect the runtime required for your project and choose the appropriate configuration from `java.configuration.runtimes`.
+
+```json
+"java.configuration.runtimes": [
+  {
+    "name": "JavaSE-1.8",
+    "path": "/usr/local/jdk1.8.0_201"
+  },
+  {
+    "name": "JavaSE-11",
+    "path": "/usr/local/jdk-11.0.3",
+    "sources" : "/usr/local/jdk-11.0.3/lib/src.zip",
+    "javadoc" : "https://docs.oracle.com/en/java/javase/11/docs/api",
+    "default":  true
+   },
+   {
+    "name": "JavaSE-12",
+    "path": "/usr/local/jdk-12.0.2"
+   },
+   {
+    "name": "JavaSE-13",
+    "path": "/usr/local/jdk-13"
+   }
+]
+```
+
+Runtime names must be one of: "J2SE-1.5", "JavaSE-1.6", "JavaSE-1.7", "JavaSE-1.8", "JavaSE-9", "JavaSE-10", "JavaSE-11", "JavaSE-12", "JavaSE-13", "JavaSE-14". We will update the list with each supported release of the JDK.
+
+> **Note**: To enable Java preview features, see [How can I use VS Code with new Java versions](/docs/java/java-faq.md#how-can-i-use-visual-studio-code-with-new-java-versions).
+
+### JDK for source only
+
+If you only work with source files and don't use a build tool, VS Code will apply an appropriate runtime using the default configuration of `java.configuration.runtimes`. If a default isn't specified, VS Code will use the runtime used by the language server, which is determined by the order shown below:
+
+![jdk home](images/java-project/projectmanager-javahomeconf.png)
+
+## Library configuration
+
+Behind the scene, there's a setting `java.project.referencedLibaries` in `settings.json`. Below are details on how to customize this setting.
 
 **Include libraries**
 
@@ -157,137 +181,31 @@ In case VS Code throws an error for a classpath issue, try setting your classpat
 
 In some rare cases, you may need to clean the Java workspace by executing the **Java: Clean the java language server workspace** command from the Command Palette (`kb(workbench.action.showCommands)`) to let the language server rebuild your dependencies.
 
-### Configure multiple JDK
+## Lightweight Mode
 
-As Java evolves, Java developers sometimes need to deal with multiple Java runtimes. The Java extension supports preference mapping through the `java.configuration.runtimes` array for Java execution environments. VS Code will detect the runtime required for your project and choose the appropriate one configured.
+VS Code for Java supports two modes, lightweight and standard. With lightweight mode, only source files and JDK are resolved by the language server; with standard mode, imported dependencies are resolved and the project is built by the language server. Lightweight mode works best when you need a super quick-to-start and lightweight environment to work with your source files, for example, reading source code, navigating among source code and JDK, viewing outline and Javadoc, and detecting and fixing syntax errors. Also, code completion is supported within the scope of source files and JDK.
 
-```json
-"java.configuration.runtimes": [
-  {
-    "name": "JavaSE-1.8",
-    "path": "/usr/local/jdk1.8.0_201"
-  },
-  {
-    "name": "JavaSE-11",
-    "path": "/usr/local/jdk-11.0.3",
-    "sources" : "/usr/local/jdk-11.0.3/lib/src.zip",
-    "javadoc" : "https://docs.oracle.com/en/java/javase/11/docs/api",
-    "default":  true
-   },
-   {
-    "name": "JavaSE-12",
-    "path": "/usr/local/jdk-12.0.2"
-   },
-   {
-    "name": "JavaSE-13",
-    "path": "/usr/local/jdk-13"
-   }
-]
-```
+Lightweight mode doesn't resolve imported dependencies nor build the project, so it does not support running, debugging, refactoring, linting, or detecting semantic errors. For these features to be available, you need to switch your workspace from lightweight mode to standard mode.
 
-Runtime names must be one of: "J2SE-1.5", "JavaSE-1.6", "JavaSE-1.7", "JavaSE-1.8", "JavaSE-9", "JavaSE-10", "JavaSE-11", "JavaSE-12", "JavaSE-13". We will update the list with each supported release of the JDK.
+You can control which mode to launch with by configuring `java.server.launchMode` with the options below:
 
-## Maven
+- `Hybrid` (default) - Firstly, a workspace is opened with lightweight mode. You will be asked whether to switch to standard mode if your workspace contains unresolved Java projects. If you choose **Later**, it will stay in lightweight mode. You can click the server mode icon on the Status bar to manually switch to standard mode.
+- `Standard` - A workspace is opened with standard mode.
+- `LightWeight` - A workspace is opened with lightweight mode. You can click the server mode icon on the Status bar to manually switch to standard mode.
 
-[Maven](http://maven.apache.org/) is a software tool that helps you manage Java projects and automate application builds. The [Maven for Java](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-maven) extension for Visual Studio Code provides fully integrated Maven support, allowing you to explore Maven projects, execute Maven commands, and perform the goals of build lifecycle and plugins.
+The Status bar indicates which mode the current workspace is in using different icons.
 
-<a class="tutorial-install-extension-btn" href="vscode:extension/vscjava.vscode-maven">Install the Maven for Java extension</a>
+<div id="codicon-listing">
 
-### Exploring Maven project
+- <i class="codicon codicon-rocket"></i> - workspace opened with lightweight mode.
+- <i class="codicon codicon-sync"></i> - workspace in the process of being opened with standard mode.
+- <i class="codicon codicon-thumbsup"></i> - workspace opened with standard mode.
 
-Once a Maven project is loaded, the extension will be activated and it will automatically scan for `pom.xml` files in your workspace and displays all Maven projects and their modules in the side bar.
+</div>
 
-![Maven Explorer](images/java-project/maven-explorer.png)
+Clicking the lightweight mode icon switches to standard mode.
 
-### Resolve unknown type
-
-The Maven extension also supports searching Maven Central to resolve unknown types in your source code. You can do this by selecting the **Resolve unknown type** link shown on hover.
-
-<video autoplay loop muted playsinline controls>
-  <source src="/docs/java/java-project/maven-resolve-unknown-type.mp4" type="video/mp4">
-</video>
-
-### Working with POM.xml
-
-The extension provides code snippets and auto completion for adding Maven dependencies based on local Maven repositories. See how easy it is to add a new dependency to your `pom.xml` with those convenient features.
-
-<video autoplay loop muted playsinline controls>
-  <source src="/docs/java/java-project/maven-pom-editing.mp4" type="video/mp4">
-</video>
-
-The extension also enables you to generate effective POM.
-
-<video autoplay loop muted playsinline controls>
-  <source src="/docs/java/java-project/maven-effective-pom.mp4" type="video/mp4">
-</video>
-
-You can also use the command **Maven: Add a Dependency** (or `maven.project.addDependency`) to help add a new dependency to `pom.xml`. The process is interactive.
-
-<video autoplay loop muted playsinline controls>
-  <source src="/docs/java/java-project/maven-add-dependency.mp4" type="video/mp4">
-</video>
-
-You can also add dependencies through the Java Dependency Viewer, which calls the same Maven command.
-
-<video autoplay loop muted playsinline controls>
-  <source src="/docs/java/java-project/maven-add-dependency-2.mp4" type="video/mp4">
-</video>
-
-Furthermore, VS Code also supports showing dependencies in a tree view, which allows you to inspect all dependencies in your project at a single place and check for potential issues.
-
-<video autoplay loop muted playsinline controls>
-  <source src="/docs/java/java-project/maven-dependency-tree.mp4" type="video/mp4">
-</video>
-
-### Execute Maven commands and goals
-
-By right-clicking each Maven project in the explorer, you can conveniently run Maven goals.
-
-<video autoplay loop muted playsinline controls>
-  <source src="/docs/java/java-project/maven-run.mp4" type="video/mp4">
-</video>
-
-The extension also preserves the history of goals for each project, so you can quickly rerun the previous command, which is useful when you're running a long custom goal.
-
-There are two ways to rerun a goal:
-
-1. Command Palette > Select **Maven: History** > Select a project > Select command from the history.
-2. Right-click a project > Click **History** > Select command from history.
-
-<video autoplay loop muted playsinline controls>
-  <source src="/docs/java/java-project/maven-history.mp4" type="video/mp4">
-</video>
-
-You can also specify your favorite commands in settings for future execution.
-
-<video autoplay loop muted playsinline controls>
-  <source src="/docs/java/java-project/maven-favorite-command.mp4" type="video/mp4">
-</video>
-
-For each plug-in you use with your project, the extension also provides you an easy way to access the goals within each plugin.
-
-<video autoplay loop muted playsinline controls>
-  <source src="/docs/java/java-project/maven-plugin-goal.mp4" type="video/mp4">
-</video>
-
-To debug Maven goals, right-click on a goal and start debugging. The Maven extension will call the Java debugger with the right parameters. This is a handy, time-saving feature.
-
-<video autoplay loop muted playsinline controls>
-  <source src="/docs/java/java-project/debug-maven-plugin-goals.mp4" type="video/mp4">
-</video>
-
-### Generate project from Maven Archetype
-
-Another handy feature provided by this extension is to generate a Maven project from [Archetype](https://maven.apache.org/guides/introduction/introduction-to-archetypes.html). The extension loads archetypes listed in local/remote catalogs. After selection, the extension sends `mvn archetype:generate -D...` to the terminal.
-
-There are two ways to generate a Maven project:
-
-1. From the Command Palette, select **Maven: Generate from Maven Archetype**.
-2. Right-click on a folder and select **Generate from Maven Archetype**.
-
-<video autoplay loop muted playsinline controls>
-  <source src="/docs/java/java-project/maven-archetype.mp4" type="video/mp4">
-</video>
+![Switch to Standard](images/java-project/switch-to-standard.gif)
 
 ## Build Status
 
@@ -299,7 +217,7 @@ When you edit Java source code in Visual Studio Code, the Java language server i
 
 ### Additional resources
 
-Visit the [GitHub Repo](https://github.com/Microsoft/vscode-maven) of the Maven extension for additional [configurations](https://github.com/Microsoft/vscode-maven/tree/master#additional-configurations) and a [troubleshooting guide](https://github.com/Microsoft/vscode-maven/blob/master/Troubleshooting.md).
+Visit the [GitHub Repo](https://github.com/microsoft/vscode-maven) of the Maven extension for additional [configurations](https://github.com/microsoft/vscode-maven/tree/master#additional-configurations) and a [troubleshooting guide](https://github.com/microsoft/vscode-maven/blob/master/Troubleshooting.md).
 
 In addition to Maven, there's also a [Bazel extension](https://marketplace.visualstudio.com/items?itemName=BazelBuild.vscode-bazel) if you use Bazel to build and test your project.
 
@@ -307,7 +225,7 @@ In addition to Maven, there's also a [Bazel extension](https://marketplace.visua
 
 Read on to find out more about:
 
-* [Java Editing](/docs/java/java-editing.md) - Explore the editing features for Java in VS Code.
-* [Java Debugging](/docs/java/java-debugging.md) - Find out how to debug your Java project with VS Code.
-* [Java Testing](/docs/java/java-testing.md) - Use VS Code for your JUnit and TestNG cases.
-* [Java Extensions](/docs/java/extensions.md) - Learn about more useful Java extensions for VS Code.
+- [Java Editing](/docs/java/java-editing.md) - Explore the editing features for Java in VS Code.
+- [Java Debugging](/docs/java/java-debugging.md) - Find out how to debug your Java project with VS Code.
+- [Java Testing](/docs/java/java-testing.md) - Use VS Code for your JUnit and TestNG cases.
+- [Java Extensions](/docs/java/extensions.md) - Learn about more useful Java extensions for VS Code.

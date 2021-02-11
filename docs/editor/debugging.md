@@ -4,7 +4,7 @@ Area: editor
 TOCTitle: Debugging
 ContentId: 4E9A74AA-D778-4D1C-B369-83763B3C340F
 PageTitle: Debugging in Visual Studio Code
-DateApproved: 3/9/2020
+DateApproved: 2/4/2021
 MetaDescription: One of the great things in Visual Studio Code is debugging support.  Set breakpoints, step-in, inspect variables and more.
 MetaSocialImage: images/debugging/Debugging.png
 ---
@@ -18,7 +18,7 @@ One of the key features of Visual Studio Code is its great debugging support. VS
 
 VS Code has built-in debugging support for the [Node.js](https://nodejs.org/) runtime and can debug JavaScript, TypeScript, or any other language that gets transpiled to JavaScript.
 
-For debugging other languages and runtimes (including [PHP](https://marketplace.visualstudio.com/items?itemName=felixfbecker.php-debug), [Ruby](https://marketplace.visualstudio.com/items?itemName=rebornix.Ruby), [Go](https://marketplace.visualstudio.com/items?itemName=ms-vscode.Go), [C#](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp), [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python), [C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools), [PowerShell](https://marketplace.visualstudio.com/items?itemName=ms-vscode.PowerShell) and [many others](https://marketplace.visualstudio.com/search?term=debug&target=VSCode&category=Debuggers&sortBy=Relevance)), look for `Debuggers` [extensions](/docs/editor/extension-gallery.md) in our VS Code [Marketplace](https://marketplace.visualstudio.com/vscode/Debuggers) or select **Install Additional Debuggers** in the top-level Run menu.
+For debugging other languages and runtimes (including [PHP](https://marketplace.visualstudio.com/items?itemName=felixfbecker.php-debug), [Ruby](https://marketplace.visualstudio.com/items?itemName=rebornix.Ruby), [Go](https://marketplace.visualstudio.com/items?itemName=golang.go), [C#](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp), [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python), [C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools), [PowerShell](https://marketplace.visualstudio.com/items?itemName=ms-vscode.PowerShell) and [many others](https://marketplace.visualstudio.com/search?term=debug&target=VSCode&category=Debuggers&sortBy=Relevance)), look for `Debuggers` [extensions](/docs/editor/extension-gallery.md) in our VS Code [Marketplace](https://marketplace.visualstudio.com/vscode/Debuggers) or select **Install Additional Debuggers** in the top-level Run menu.
 
 Below are several popular extensions which include debugging support:
 
@@ -40,7 +40,7 @@ To bring up the Run view, select the Run icon in the **Activity Bar** on the sid
 
 The Run view displays all information related to running and debugging and has a top bar with debugging commands and configuration settings.
 
-If running and debugging is not yet configured (no `launch.json` has been created) we show the Run start view.
+If running and debugging is not yet configured (no `launch.json` has been created), VS Code shows the Run start view.
 
 ![Simplified initial Run and Debug view](images/debugging/debug-start.png)
 
@@ -52,11 +52,11 @@ The top-level **Run** menu has the most common run and debug commands:
 
 ## Launch configurations
 
-To run or debug a simple app in VS Code, press `kb(workbench.action.debug.start)` and VS Code will try to run your currently active file.
+To run or debug a simple app in VS Code, select **Run and Debug** on the Debug start view or press `kb(workbench.action.debug.start)` and VS Code will try to run your currently active file.
 
 However, for most debugging scenarios, creating a launch configuration file is beneficial because it allows you to configure and save debugging setup details. VS Code keeps debugging configuration information in a `launch.json` file located in a `.vscode` folder in your workspace (project root folder) or in your [user settings](/docs/editor/debugging.md#global-launch-configuration) or [workspace settings](/docs/editor/multi-root-workspaces.md#workspace-launch-configurations).
 
-To create a `launch.json` file, open your project folder in VS Code (**File** > **Open Folder**) and then select the Configure gear icon on the Run view top bar.
+To create a `launch.json` file, click the **create a launch.json file** link in the Run start view.
 
 ![launch configuration](images/debugging/launch-configuration.png)
 
@@ -74,7 +74,10 @@ Here is the launch configuration generated for Node.js debugging:
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${file}"
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}\\app.js"
         }
     ]
 }
@@ -183,7 +186,7 @@ Variables can be inspected in the **VARIABLES** section of the Run view or by ho
 
 ![Debug Variables](images/debugging/variables.png)
 
-Variable values can be modified with the **Set Value** action from the variable's context menu.
+Variable values can be modified with the **Set Value** action from the variable's context menu. Additionally, you can use the **Copy Value** action to copy the variable's value, or **Copy as Expression** action to copy an expression to access the variable.
 
 Variables and expressions can also be evaluated and watched in the Run view's **WATCH** section.
 
@@ -208,7 +211,7 @@ The following attributes are mandatory for every launch configuration:
 Here are some optional attributes available to all launch configurations:
 
 * `presentation` - using the `order`, `group`, and `hidden` attributes in the `presentation` object you can sort, group, and hide configurations and compounds in the Debug configuration dropdown and in the Debug quick pick.
-* `preLaunchTask` - to launch a task before the start of a debug session, set this attribute to the name of a task specified in [tasks.json](/docs/editor/tasks.md) (in the workspace's `.vscode` folder). Or, this can be set to `${defaultBuildTask}` to use your default build task.
+* `preLaunchTask` - to launch a task before the start of a debug session, set this attribute to the label of a task specified in [tasks.json](/docs/editor/tasks.md) (in the workspace's `.vscode` folder). Or, this can be set to `${defaultBuildTask}` to use your default build task.
 * `postDebugTask` - to launch a task at the very end of a debug session, set this attribute to the name of a task specified in [tasks.json](/docs/editor/tasks.md) (in the workspace's `.vscode` folder).
 * `internalConsoleOptions` - this attribute controls the visibility of the Debug Console panel during a debugging session.
 * `debugServer` - **for debug extension authors only**: this attribute allows you to connect to a specified port instead of launching the debug adapter.
@@ -219,6 +222,7 @@ Many debuggers support some of the following attributes:
 * `program` - executable or file to run when launching the debugger
 * `args` - arguments passed to the program to debug
 * `env` - environment variables (the value `null` can be used to "undefine" a variable)
+* `envFile` - path to dotenv file with environment variables
 * `cwd` - current working directory for finding dependencies and other files
 * `port` - port when attaching to a running process
 * `stopOnEntry` - break immediately when the program launches
@@ -265,6 +269,8 @@ Below is an example that passes `"args"` to the program differently on Windows:
 
 Valid operating properties are `"windows"` for Windows, `"linux"` for Linux and `"osx"` for macOS. Properties defined in an operating system specific scope override properties defined in the global scope.
 
+Please note that the `type` property can not be placed inside a platform-specific section, because `type` indirectly determines the platform in remote debugging scenarios, and that would result in a cyclic dependency.
+
 In the example below debugging the program always **stops on entry** except on macOS:
 
 ```json
@@ -301,8 +307,6 @@ VS Code supports adding a `"launch"` object inside your User [settings](/docs/ge
 }
 ```
 
->**Tip**: If a workspace contains a `"launch.json"`, the global launch configuration is ignored.
-
 ## Advanced breakpoint topics
 
 ### Conditional breakpoints
@@ -312,11 +316,18 @@ A powerful VS Code debugging feature is the ability to set conditions based on e
 - **Expression condition**: The breakpoint will be hit whenever the expression evaluates to `true`.
 - **Hit count**: The 'hit count' controls how many times a breakpoint needs to be hit before it will 'break' execution. Whether a 'hit count' is respected and the exact syntax of the expression vary among debugger extensions.
 
-You can add a condition and/or hit count when creating the breakpoint (with the **Add Conditional Breakpoint** action) or when modifying an existing one (with the **Edit Breakpoint** action). In both cases, an inline text box with a drop-down menu opens where you can enter expressions:
+You can add a condition and/or hit count when creating a source breakpoint (with the **Add Conditional Breakpoint** action) or when modifying an existing one (with the **Edit Condition** action). In both cases, an inline text box with a drop-down menu opens where you can enter expressions:
 
 ![HitCount](images/debugging/hitCount.gif)
 
-If a debugger does not support conditional breakpoints, the **Add Conditional Breakpoint** action will be missing.
+Condition and hit count editing support is also supported for **function** and **exception** breakpoints.
+You can initiate condition editing from the context menu, or the new inline **Edit Condition** action.
+
+An example of condition editing in the **BREAKPOINTS** view:
+![condition editing in breakpoint view](images/debugging/breakpoints.gif)
+
+If a debugger does not support conditional breakpoints, the **Add Conditional Breakpoint** and **Edit Condition** actions will be missing.
+
 
 ### Inline breakpoints
 
@@ -466,6 +477,8 @@ The `uriFormat` property describes how the port number is turned into a URI. The
 
 The resulting URI is then opened outside of VS Code ("externally") with the standard application configured for the URI's scheme.
 
+### Trigger Debugging via Chrome
+
 Alternatively, the `action` can be set to `debugWithChrome`. In this case, VS Code starts a Chrome debug session for the URI (which requires that the [Debugger for Chrome](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome) extension is installed). In this mode, a `webRoot` property can be added that is passed to the Chrome debug session.
 
 To simplify things a bit, most properties are optional and we use the following fallback values:
@@ -474,7 +487,13 @@ To simplify things a bit, most properties are optional and we use the following 
 * **uriFormat**: `"http://localhost:%s"`
 * **webRoot**: `"${workspaceFolder}"`
 
-And here the **serverReadyAction** feature in action:
+### Triggering an Arbitrary Launch Config
+
+In some cases you may need to configure additional options for the Chrome debug session--or use a different debugger entirely. You can do this by setting `action` to `startDebugging`, with a `name` property set to the name of the launch configuration to start when the `pattern` is matched.
+
+The named launch configuration must be in the same file or folder as the one with the `serverReadyAction`.
+
+Here the **serverReadyAction** feature in action:
 
 ![Server ready feature in action](images/debugging/server-ready.gif)
 
@@ -483,11 +502,18 @@ And here the **serverReadyAction** feature in action:
 To learn about VS Code's Node.js debugging support, take a look at:
 
 * [Node.js](/docs/nodejs/nodejs-debugging.md) - Describes the Node.js debugger, which is included in VS Code.
+* [TypeScript](/docs/typescript/typescript-debugging.md) - The Node.js debugger also supports TypeScript debugging.
 
 To see tutorials on the basics of Node.js debugging, check out these videos:
 
 * [Intro Video - Debugging](/docs/introvideos/debugging.md) - Showcases the basics of debugging.
 * [Getting started with Node.js debugging](https://www.youtube.com/watch?v=2oFKNL7vYV8) - Shows how to attach a debugger to a running Node.js process.
+
+To learn about debugging support for other programming languages via VS Code extensions:
+
+* [C++](/docs/cpp/cpp-debug.md)
+* [Python](/docs/python/debugging.md)
+* [Java](/docs/java/java-debugging.md)
 
 To learn about VS Code's task running support, go to:
 

@@ -1,7 +1,7 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
 ContentId: 995c7085-5fc0-44e0-a171-30a759c0b7da
-DateApproved: 3/9/2020
+DateApproved: 2/4/2021
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
 MetaDescription: A guide to using commands programmatically in Visual Studio Code extensions (plug-ins)
@@ -117,6 +117,8 @@ export function activate(context: vscode.ExtensionContext) {
 }
 ```
 
+You can enable command URIs in [webviews](/api/extension-guides/webview) by setting `enableCommandUris` in the `WebviewOptions` when the webview is created.
+
 ## Creating new commands
 
 ### Registering a command
@@ -129,7 +131,7 @@ import * as vscode from 'vscode';
 export function activate(context: vscode.ExtensionContext) {
   const command = 'myExtension.sayHello';
 
-  const commandHandler = (name?: string = 'world') => {
+  const commandHandler = (name: string = 'world') => {
     console.log(`Hello ${name}!!!`);
   };
 
@@ -181,7 +183,7 @@ You do not need an `onCommand` activation event for internal commands but you mu
 
 By default, all user facing commands contributed through the `commands` section of the `package.json` show up in the Command Palette. However, many commands are only relevant in certain circumstances, such as when there is an active text editor of a given language or when the user has a certain configuration option set.
 
-The [`menus.commandPalette`](/api/references/contribution-points#contributes.menus) contribution point lets you restrict when a command should show in the Command Palette. It takes the id of the target command and a [when clause](/docs/getstarted/keybindings#_when-clause-contexts) that controls when the command is shown:
+The [`menus.commandPalette`](/api/references/contribution-points#contributes.menus) contribution point lets you restrict when a command should show in the Command Palette. It takes the id of the target command and a [when clause](/api/references/when-clause-contexts) that controls when the command is shown:
 
 ```json
 {
@@ -202,8 +204,20 @@ Now the `myExtension.sayHello` command will only show up in the Command Palette 
 
 ### Enablement of commands
 
-Commands support enablement via an `enablement` property - its value is a [when-clause](/docs/getstarted/keybindings#_when-clause-contexts). Enablement applies to all menus and to registered keybindings.
+Commands support enablement via an `enablement` property - its value is a [when-clause](/api/references/when-clause-contexts). Enablement applies to all menus and to registered keybindings.
 
 > **Note**: There is semantic overlap between `enablement` and the `when` condition of menu items. The latter is used to prevent menus full of disabled items. For example, a command that analyzes a JavaScript regular expression should show **when** the file is JavaScript and be **enabled** only when the cursor is over a regular expression. The `when` clause prevents clutter, by not showing the command for all other language files. Preventing cluttered menus is highly recommended.
 
 Last, menus showing commands, like the Command Palette or context menus, implement different ways of dealing with enablement. Editor and explorer context menus render enablement/disablement items while the Command Palette filters them.
+
+### Using a custom when clause context
+
+If you are authoring your own VS Code extension and need to enable/disable commands, menus, or views by using a `when` clause context and none of the existing keys suit your needs, then you can add your own context.
+
+The first example below sets the key `myExtension:showMyCommand` to true, which you can use in enablement of commands or with the `when` property. The second example stores a value which you could use with a `when` clause to check if the number of cool open things is greater than 2.
+
+```js
+vscode.commands.executeCommand('setContext', 'myExtension:showMyCommand', true);
+
+vscode.commands.executeCommand('setContext', 'myExtension:numberOfCoolOpenThings', 4);
+```

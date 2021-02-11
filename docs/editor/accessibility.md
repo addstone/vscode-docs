@@ -4,7 +4,7 @@ Area: editor
 TOCTitle: Accessibility
 ContentId: 62894B41-CC33-400A-8A56-8C761C77B4C7
 PageTitle: Accessibility in Visual Studio Code
-DateApproved: 3/9/2020
+DateApproved: 2/4/2021
 MetaDescription: Visual Studio Code user accessibility features.  Learn here about the various ways VS Code aids user accessibility.
 ---
 # Accessibility
@@ -41,6 +41,12 @@ VS Code also has many preset keyboard shortcuts for commands. These are displaye
 
 You can also set your own keyboard shortcuts. **File** > **Preferences** > **Keyboard Shortcuts** (`kb(workbench.action.openGlobalKeybindings)`) brings up the Keyboard Shortcuts editor where you can discover and modify keybindings for VS Code actions. See [Key Bindings](/docs/getstarted/keybindings.md) for more details on customizing or adding your own keyboard shortcuts.
 
+For a quick navigation across the workbench we recommend using **Focus Next Part** (`kb(workbench.action.focusNextPart)`) and **Focus Previous Part** (`kb(workbench.action.focusPreviousPart)`) commands.
+
+### Anchor selection
+
+To make it easier to start and end selection using the keyboard we have four commands: **Set Selection Anchor** (`kb(editor.action.setSelectionAnchor)`), **Select From Anchor to Cursor** (`kb(editor.action.selectFromAnchorToCursor)`), **Cancel Selection Anchor** (`kb(editor.action.cancelSelectionAnchor)`) and **Go to Selection Anchor**.
+
 ## Tab navigation
 
 You can use the `kbstyle(Tab)` key to jump between VS Code UI controls. Use `kbstyle(Shift+Tab)` to tab in reverse order.  As you tab through the UI controls, you can see an indicator around the UI element once the element gains focus.
@@ -65,8 +71,6 @@ Read-only files never trap the `kbstyle(Tab)` key. The **Integrated Terminal** p
 ## Screen readers
 
 VS Code supports screen readers in the editor using a strategy based on paging the text. We have tested using the [NVDA screen reader](https://www.nvaccess.org), VoiceOver on macOS and Orca on Linux.
-
-There is a community developed [NVDA add-on for VS Code](https://github.com/pawelurbanski/nvda-for-vs-code), that improves unintentional switching between forms and browse mode as well as providing better text reading while using IntelliSense. The add-on requires VS Code version 1.33 or higher. See the add-on [README](https://github.com/pawelurbanski/nvda-for-vs-code/blob/master/README.md) file for more details.
 
 > When using NVDA on Windows, we recommend to update to NVDA 2017.3 or higher. NVDA 2017.3 increases NVDA's timeout for receiving a caret move event from 30ms to 100ms. This version is the first one [where the built-in timeout is increased from 30ms to 100ms](https://github.com/nvaccess/nvda/pull/7201).
 
@@ -100,6 +104,10 @@ Output in the Integrated Terminal can be navigated through by using the "navigat
 
 The setting `terminal.integrated.minimumContrastRatio` can be set to a number between 1 and 21, this will cause the text color either increase or reduce luminance until the contrast ratio is met or pure white (`#FFFFFF`) black (`#000000`) is hit.
 
+## Status Bar accessibility
+
+Once a focus is in the status bar via **Focus Next Part** (`kb(workbench.action.focusNextPart)`) arrow navigation can be used to move focus between status bar entries.
+
 ## Debugger accessibility
 
 The VS Code debugger UI is user accessible and has the following features:
@@ -116,15 +124,17 @@ VS Code has some known accessibility issues depending on the platform. Here's a 
 
 ### macOS
 
-There is limited screen reader support for the editor with VoiceOver.
+There is screen reader support for the editor with VoiceOver.
 
 ### Linux
 
 Screen reader support for the editor is still work in progress because the accessibility implementation for Chrome on Linux is work in progress.
 Thus there are a couple of things needed in order to have screen reader Orca working with VS Code:
 
-* Make sure to use the latest version of Orca out of master. Instructions can be found in [issue #91063](https://github.com/microsoft/vscode/issues/91063).
+* Make sure to use the latest version of Orca out of master. More details can be found on the [Orca page](https://gitlab.gnome.org/GNOME/orca/-/blob/master/README.md).
+* We have tested that VS Code works well with Orca on Ubuntu 18, Fedora 31, Arch Linux. With Ubuntu 19 we have encountered issues.
 * Make sure to have the setting `"editor.accessibilitySupport": "on"` in VS Code. You can do this using settings, or by running the **Show Accessibility Help** command and pressing `kbstyle(Ctrl+E)` to turn on accessibilitySupport.
+* If Orca is still silent, try setting `ACCESSIBILITY_ENABLED=1` as an environment variable.
 
 After enabling that setting, VS Code should work with the Orca screen reader.
 

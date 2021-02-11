@@ -4,14 +4,14 @@ Area: editor
 TOCTitle: Extension Marketplace
 ContentId: 319916C4-93F2-471F-B448-FD416736C40C
 PageTitle: Managing Extensions in Visual Studio Code
-DateApproved: 3/9/2020
+DateApproved: 2/4/2021
 MetaDescription: Discover, add, update, disable and uninstall Visual Studio Code extensions (plug-ins) through the Extension Marketplace.
 ---
 # Extension Marketplace
 
 **Increase the power of Visual Studio Code through Extensions**
 
-The features that Visual Studio Code includes out-of-the-box are just the start. VS Code extensions let you add languages, debuggers, and tools to your installation to support your development workflow. VS Code's rich extensibility model lets extension authors plug directly into the VS Code UI and contribute functionality through the same APIs used by VS Code.  This topic explains how to find, install, and manage VS Code extensions from the [Visual Studio Code MarketPlace](https://marketplace.visualstudio.com/VSCode).
+The features that Visual Studio Code includes out-of-the-box are just the start. VS Code extensions let you add languages, debuggers, and tools to your installation to support your development workflow. VS Code's rich extensibility model lets extension authors plug directly into the VS Code UI and contribute functionality through the same APIs used by VS Code.  This topic explains how to find, install, and manage VS Code extensions from the [Visual Studio Code Marketplace](https://marketplace.visualstudio.com/VSCode).
 
 ## Browse for extensions
 
@@ -197,7 +197,7 @@ Extensions can set **Categories** and **Tags** describing their features.
 
 You can filter on category and tag by using `category:` and `tag:`.
 
-Supported categories are: `[Programming Languages, Snippets, Linters, Themes, Debuggers, Formatters, Keymaps, SCM Providers, Other, Extension Packs, Language Packs]`. They can be accessed through IntelliSense in the extensions search box:
+Supported categories are: `[Programming Languages, Snippets, Linters, Themes, Debuggers, Formatters, Keymaps, SCM Providers, Other, Extension Packs, Language Packs, Data Science, Machine Learning, Visualization, Notebooks]`. They can be accessed through IntelliSense in the extensions search box:
 
 ![categories debuggers](images/extension-gallery/extension-search-categories.png)
 
@@ -221,7 +221,7 @@ If you'd like to learn more about packaging and publishing extensions, see our [
 
 ## Workspace recommended extensions
 
-A good set of extensions can make working with a particular workspace or programming language more productive and you'd often like to share this list with your team or colleagues. You can create a recommended list of extensions for a workspace with the **Extensions: Configure Recommended Extensions (Workspace)** command.
+A good set of extensions can make working with a particular workspace or programming language more productive and you'd often like to share this list with your team or colleagues. You can create a recommended list of extensions for a workspace with the **Extensions: Configure Recommended Extensions (Workspace Folder)** command.
 
 In a single folder workspace, the command creates an `extensions.json` file located in the workspace `.vscode` folder where you can add a list of extensions identifiers ({publisherName}.{extensionName}).
 
@@ -232,14 +232,13 @@ An example `extensions.json` could be:
 ```json
 {
     "recommendations": [
-        "ms-vscode.vscode-typescript-tslint-plugin",
         "dbaeumer.vscode-eslint",
         "msjsdiag.debugger-for-chrome"
     ]
 }
 ```
 
-which recommends two linter extensions, TSLint and ESLint, as well as the Chrome debugger extension.
+which recommends a linter extension, ESLint, and the Chrome debugger extension.
 
 An extension is identified using its publisher name and extension identifier `publisher.extension`. You can see the name on the extension's detail page. VS Code will provide you with auto-completion for installed extensions inside these files.
 

@@ -1,13 +1,13 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
 ContentId: 26f0c0d6-1ea8-4cc1-bd10-9fa744056e7c
-DateApproved: 3/9/2020
+DateApproved: 2/4/2021
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
 MetaDescription: Bundling Visual Studio Code extensions (plug-ins) with webpack.
 ---
 
-# Bundling Extension
+# Bundling Extensions
 
 Visual Studio Code extensions often grow quickly in size. They are authored in multiple source files and depend on modules from [npm](https://www.npmjs.com). Decomposition and reuse are development best practices but they come at a cost when installing and running extensions. Loading 100 small files is much slower than loading one large file. That's why we recommend bundling. Bundling is the process of combining multiple small source files into a single file.
 
@@ -21,7 +21,9 @@ Webpack is a development tool that's available from [npm](https://www.npmjs.com)
 npm i --save-dev webpack webpack-cli
 ```
 
-This will install webpack and update your extension's `package.json` file to include webpack in the `devDependencies`. Webpack is a JavaScript bundler but many VS Code extensions are written in TypeScript and only compiled to JavaScript. With the help of a loader `ts-loader`, webpack can understand TypeScript. Use the following to install `ts-loader`:
+This will install webpack and update your extension's `package.json` file to include webpack in the `devDependencies`.
+
+Webpack is a JavaScript bundler but many VS Code extensions are written in TypeScript and only compiled to JavaScript. If your extension is using TypeScript, you can use the loader `ts-loader`, so that webpack can understand TypeScript. Use the following to install `ts-loader`:
 
 ```bash
 npm i --save-dev ts-loader
@@ -69,7 +71,7 @@ const config = {
 module.exports = config;
 ```
 
-The file is [available](https://github.com/Microsoft/vscode-extension-samples/blob/master/webpack-sample/webpack.config.js) as part of the [webpack-extension](https://github.com/Microsoft/vscode-extension-samples/blob/master/webpack-sample) sample. Webpack configuration files are normal JavaScript modules that must export a configuration object.
+The file is [available](https://github.com/microsoft/vscode-extension-samples/blob/master/webpack-sample/webpack.config.js) as part of the [webpack-extension](https://github.com/microsoft/vscode-extension-samples/blob/master/webpack-sample) sample. Webpack configuration files are normal JavaScript modules that must export a configuration object.
 
 In the sample above, the following are defined:
 
@@ -98,7 +100,7 @@ The `webpack` and `webpack-dev` scripts are for development and they produce the
 
 ## Run the extension
 
-Before you can run the extension, the `main` property in `package.json` must point to the bundle, which for the configuration above is [`"./dist/extension"`](https://github.com/Microsoft/vscode-references-view/blob/d649d01d369e338bbe70c86e03f28269cbf87027/package.json#L26). With that change, the extension can now be executed and tested. For debugging configuration, make sure to update the `outFiles` property in the `launch.json` file.
+Before you can run the extension, the `main` property in `package.json` must point to the bundle, which for the configuration above is [`"./dist/extension"`](https://github.com/microsoft/vscode-references-view/blob/d649d01d369e338bbe70c86e03f28269cbf87027/package.json#L26). With that change, the extension can now be executed and tested. For debugging configuration, make sure to update the `outFiles` property in the `launch.json` file.
 
 ## Tests
 
@@ -140,7 +142,7 @@ webpack.config.js
 
 ## Migrate an existing extension
 
-Migrating an existing extension to use webpack is easy and similar to the getting started guide above. A real world sample that adopted webpack is the VS Code's References view through this [pull request](https://github.com/Microsoft/vscode-references-view/pull/50).
+Migrating an existing extension to use webpack is easy and similar to the getting started guide above. A real world sample that adopted webpack is the VS Code's References view through this [pull request](https://github.com/microsoft/vscode-references-view/pull/50).
 
 There you can see:
 

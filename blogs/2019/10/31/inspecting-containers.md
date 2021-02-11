@@ -52,7 +52,7 @@ If everything worked, you should see output like this:
 
 ![docker-compose up output](docker-compose-output.png)
 
-And, you should be able to navigate to http://localhost:3000 and see the following:
+And, you should be able to navigate to [http://localhost:3000](http://localhost:3000) and see the following:
 
 ![Welcome to Express web page](welcome-express.png)
 
@@ -108,7 +108,7 @@ Next, open `index.js` and place a breakpoint on line 6 by clicking on the gutter
 res.render('index', { title: 'Express' });
 ```
 
-Now go to http://localhost:3000 in your browser and see the breakpoint trigger as expected!
+Now go to [http://localhost:3000](http://localhost:3000) in your browser and see the breakpoint trigger as expected!
 
 ## Install extensions
 
@@ -159,7 +159,7 @@ In this blog post, we covered how you can use the Remote - Containers extension 
 
 You can also create a [devcontainer.json](https://code.visualstudio.com/docs/remote/containers#_creating-a-devcontainerjson-file), which describes the development environment you want to create or attach to and lives with your project to share with your team members.
 
-Other useful resources include the full [Developing inside a Container](https://code.visualstudio.com/docs/remote/containers) documentation, [Advanced Container Configuration](https://code.visualstudio.com/docs/remote/containers-advanced), and our [step-by-step tutorial](https://code.visualstudio.com/remote-tutorials/containers/getting-started) on building isolated development environments with the Remote - Containers extension.
+Other useful resources include the full [Developing inside a Container](https://code.visualstudio.com/docs/remote/containers) documentation, [Advanced Container Configuration](https://code.visualstudio.com/docs/remote/containers-advanced), and our [introductory tutorial](https://code.visualstudio.com/docs/remote/containers-tutorial) on building isolated development environments with the Remote - Containers extension.
 
 Happy Remote Coding,
 

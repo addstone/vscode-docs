@@ -4,18 +4,18 @@ Area: languages
 TOCTitle: Appendix - jsconfig.json
 ContentId: 201cd81d-523c-4f62-b1f5-ed26c091657b
 PageTitle: jsconfig.json Reference
-DateApproved: 3/9/2020
+DateApproved: 2/4/2021
 MetaDescription: View the reference for jsconfig.json.
 ---
 # jsconfig.json
 
 ## What is jsconfig.json?
 
-The presence of `jsconfig.json` file in a directory indicates that the directory is the root of a JavaScript Project. The `jsconfig.json` file specifies the root files and the options for the features provided by the [JavaScript language service](https://github.com/Microsoft/TypeScript/wiki/JavaScript-Language-Service-in-Visual-Studio).
+The presence of `jsconfig.json` file in a directory indicates that the directory is the root of a JavaScript Project. The `jsconfig.json` file specifies the root files and the options for the features provided by the [JavaScript language service](https://github.com/microsoft/TypeScript/wiki/JavaScript-Language-Service-in-Visual-Studio).
 
 > **Tip:** If you are not using JavaScript, you do not need to worry about `jsconfig.json`.
 
-> **Tip:** `jsconfig.json` is a descendant of [`tsconfig.json`](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html), which is a configuration file for TypeScript. `jsconfig.json` is `tsconfig.json` with `"allowJs"` attribute set to `true`.
+> **Tip:** `jsconfig.json` is a descendant of [tsconfig.json](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html), which is a configuration file for TypeScript. `jsconfig.json` is `tsconfig.json` with `"allowJs"` attribute set to `true`.
 
 ## Why do I need a jsconfig.json file?
 
